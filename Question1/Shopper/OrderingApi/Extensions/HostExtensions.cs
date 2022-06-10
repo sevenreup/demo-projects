@@ -1,7 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductApi.Data;
+using OrderingApi.Data;
 
-namespace ProductApi.Extensions
+namespace OrderingApi.Extensions
 {
     public static class HostExtensions
     {
@@ -9,7 +9,7 @@ namespace ProductApi.Extensions
         {
             using (var scope = webApp.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<ProductContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<OrderContext>())
                 {
                     try
                     {

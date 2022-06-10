@@ -1,6 +1,6 @@
-﻿namespace ProductApi.Entities
+﻿namespace ProductApi.DTOs
 {
-    public class Product
+    public class ProductDTO
     {
         public long Id { get; set; }
         public string Name { get; set; }

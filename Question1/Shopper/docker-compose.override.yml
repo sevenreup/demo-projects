@@ -1,0 +1,29 @@
+version: '3.4'
+
+services:
+  pgdb:
+    container_name: pgdb
+    environment:
+      - POSTGRES_USER=test
+      - POSTGRES_PASSWORD=admin1234
+      - POSTGRES_DB=DiscountDb
+    restart: always
+    ports:
+        - "5442:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data/
+
+  orderingapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Postgres=Server=pgdb;Port=5432;Database=Shopper;User Id=test;Password=admin1234;"
+    ports:
+      - "8002:80"
+
+  productapi:
+    environment:
+      - ASPNETCORE_ENVIRONMENT=Development
+      - "ConnectionStrings:Postgres=Server=pgdb;Port=5432;Database=Shopper;User Id=test;Password=admin1234;"
+    ports:
+      - "8001:80"
+

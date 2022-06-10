@@ -1,3 +1,8 @@
+using Microsoft.EntityFrameworkCore;
+using OrderingApi;
+using OrderingApi.Data;
+using OrderingApi.Extensions;
+
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
@@ -7,14 +12,19 @@ builder.Services.AddControllers();
 builder.Services.AddEndpointsApiExplorer();
 builder.Services.AddSwaggerGen();
 
+builder.Services.AddApplicationServices();
+builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
+
+builder.Services.AddEntityFrameworkNpgsql().AddDbContext<OrderContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+
+
 var app = builder.Build();
 
-// Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
-    app.UseSwagger();
-    app.UseSwaggerUI();
-}
+
+app.UseSwagger();
+app.UseSwaggerUI();
+
+app.MigrateDatabase(3);
 
 app.UseAuthorization();
 

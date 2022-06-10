@@ -25,7 +25,7 @@ namespace ProductApi.Repository
         {
             return await _context
                            .Products
-                           .FirstOrDefaultAsync(p => p.Id == id);
+                           .FirstOrDefaultAsync(p => p.Id.Equals(id));
         }
 
         public async Task<IEnumerable<Product>> GetProductByName(string name)

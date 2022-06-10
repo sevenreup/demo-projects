@@ -1,15 +1,15 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using ProductApi.Data;
+using UniqueIdentifier.Data;
 
-namespace ProductApi.Extensions
+namespace UniqueIdentifier.Extensions
 {
-    public static class HostExtensions
+    public static class ApplicationExtensions
     {
         public static WebApplication MigrateDatabase(this WebApplication webApp, int? retry = 0)
         {
             using (var scope = webApp.Services.CreateScope())
             {
-                using (var appContext = scope.ServiceProvider.GetRequiredService<ProductContext>())
+                using (var appContext = scope.ServiceProvider.GetRequiredService<IdentifierContext>())
                 {
                     try
                     {

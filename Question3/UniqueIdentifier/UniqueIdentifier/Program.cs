@@ -1,7 +1,7 @@
 using Microsoft.EntityFrameworkCore;
-using ProductApi;
-using ProductApi.Data;
-using ProductApi.Extensions;
+using UniqueIdentifier;
+using UniqueIdentifier.Data;
+using UniqueIdentifier.Extensions;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -15,13 +15,17 @@ builder.Services.AddSwaggerGen();
 builder.Services.AddApplicationServices();
 builder.Services.AddAutoMapper(AppDomain.CurrentDomain.GetAssemblies());
 
-builder.Services.AddEntityFrameworkNpgsql().AddDbContext<ProductContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+builder.Services.AddEntityFrameworkNpgsql().AddDbContext<IdentifierContext>(opt => opt.UseNpgsql(builder.Configuration.GetConnectionString("Postgres")));
+
 
 var app = builder.Build();
 
-
-app.UseSwagger();
-app.UseSwaggerUI();
+// Configure the HTTP request pipeline.
+if (app.Environment.IsDevelopment())
+{
+    app.UseSwagger();
+    app.UseSwaggerUI();
+}
 
 app.MigrateDatabase(3);
 
